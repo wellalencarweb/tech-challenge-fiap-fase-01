@@ -19,5 +19,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/test', function () {
-    return "ok";
+    $teste = "UP";
+    $a = $teste;
+    return $a;
 });
+
+/**
+ * @uses CreateUserController
+ */
+Route::post('user', 'App\Http\Controllers\CreateUserController');
+//Route::get('user/{id}', 'GetUserController');
+//Route::put('user/{id}', 'UpdateUserController');
+//Route::delete('user/{id}', 'DeleteUserController');
+
+//Route::get('client/{id}', 'GetClientController');
+//Route::post('client', 'CreateClientController');
+//Route::put('client/{id}', 'UpdateClientController');
+//Route::delete('client/{id}', 'DeleteClientController');
