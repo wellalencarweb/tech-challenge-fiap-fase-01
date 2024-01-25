@@ -19,7 +19,7 @@ class ClientResource extends JsonResource
             'data' => [
                 'name' => $this->name()->value(),
                 'email' => $this->email()->value(),
-                'emailVerifiedDate' => $this->emailVerifiedDate()->value(),
+                'cpf' => 'add cpf',
             ]
         ];
     }

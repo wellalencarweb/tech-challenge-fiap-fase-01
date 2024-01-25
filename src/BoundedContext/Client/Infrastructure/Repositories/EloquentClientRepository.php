@@ -8,15 +8,13 @@ use App\Client as EloquentClientModel;
 use Src\BoundedContext\Client\Domain\Contracts\ClientRepositoryContract;
 use Src\BoundedContext\Client\Domain\Client;
 use Src\BoundedContext\Client\Domain\ValueObjects\ClientEmail;
-use Src\BoundedContext\Client\Domain\ValueObjects\ClientEmailVerifiedDate;
 use Src\BoundedContext\Client\Domain\ValueObjects\ClientId;
 use Src\BoundedContext\Client\Domain\ValueObjects\ClientName;
-use Src\BoundedContext\Client\Domain\ValueObjects\ClientPassword;
-use Src\BoundedContext\Client\Domain\ValueObjects\ClientRememberToken;
+
 
 final class EloquentClientRepository implements ClientRepositoryContract
 {
-    private $eloquentClientModel;
+    private EloquentClientModel $eloquentClientModel;
 
     public function __construct()
     {
@@ -31,9 +29,6 @@ final class EloquentClientRepository implements ClientRepositoryContract
         return new Client(
             new ClientName($user->name),
             new ClientEmail($user->email),
-            new ClientEmailVerifiedDate($user->email_verified_at),
-            new ClientPassword($user->password),
-            new ClientRememberToken($user->remember_token)
         );
     }
 
@@ -47,10 +42,7 @@ final class EloquentClientRepository implements ClientRepositoryContract
         // Return Domain Client model
         return new Client(
             new ClientName($user->name),
-            new ClientEmail($user->email),
-            new ClientEmailVerifiedDate($user->email_verified_at),
-            new ClientPassword($user->password),
-            new ClientRememberToken($user->remember_token)
+            new ClientEmail($user->email)
         );
     }
 
@@ -59,11 +51,8 @@ final class EloquentClientRepository implements ClientRepositoryContract
         $newClient = $this->eloquentClientModel;
 
         $data = [
-            'name'              => $user->name()->value(),
-            'email'             => $user->email()->value(),
-            'email_verified_at' => $user->emailVerifiedDate()->value(),
-            'password'          => $user->password()->value(),
-            'remember_token'    => $user->rememberToken()->value(),
+            'name' => $user->name()->value(),
+            'email' => $user->email()->value(),
         ];
 
         $newClient->create($data);
