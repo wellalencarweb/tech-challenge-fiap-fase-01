@@ -4,13 +4,11 @@ namespace Src\BoundedContext\Client\Infrastructure\Eloquent;
 
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticate;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
-class ClientModel extends Authenticate
+class ClientModel extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use  HasFactory;
 
     protected $table = 'clients';
 
@@ -24,4 +22,9 @@ class ClientModel extends Authenticate
         'email',
         'cpf'
     ];
+
+    protected static function newFactoryTimes(int $count): ClientFactory
+    {
+        return ClientFactory::times($count);
+    }
 }
