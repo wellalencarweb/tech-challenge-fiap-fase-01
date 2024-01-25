@@ -6,6 +6,7 @@ namespace Src\BoundedContext\Client\Application;
 
 use Src\BoundedContext\Client\Domain\Contracts\ClientRepositoryContract;
 use Src\BoundedContext\Client\Domain\Client;
+use Src\BoundedContext\Client\Domain\ValueObjects\ClientCpf;
 use Src\BoundedContext\Client\Domain\ValueObjects\ClientEmail;
 use Src\BoundedContext\Client\Domain\ValueObjects\ClientName;
 
@@ -18,13 +19,16 @@ final class GetClientByCriteriaUseCase
         $this->repository = $repository;
     }
 
-    public function __invoke(string $userName, string $userEmail): ?Client
+    public function __invoke(
+        string $clientName,
+        string $clientEmail,
+        string $clientCpf
+    ): ?Client
     {
-        $name  = new ClientName($userName);
-        $email = new ClientEmail($userEmail);
+        $name   = new ClientName($clientName);
+        $email  = new ClientEmail($clientEmail);
+        $cpf    = new ClientCpf($clientCpf);
 
-        $user = $this->repository->findByCriteria($name, $email);
-
-        return $user;
+        return $this->repository->findByCriteria($name, $email, $cpf);
     }
 }

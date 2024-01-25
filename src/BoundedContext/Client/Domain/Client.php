@@ -5,23 +5,19 @@ declare(strict_types=1);
 namespace Src\BoundedContext\Client\Domain;
 
 use JetBrains\PhpStorm\Pure;
+use Src\BoundedContext\Client\Domain\ValueObjects\ClientCpf;
 use Src\BoundedContext\Client\Domain\ValueObjects\ClientEmail;
 use Src\BoundedContext\Client\Domain\ValueObjects\ClientName;
 
 
 final class Client
 {
-    private ClientName $name;
-    private ClientEmail $email;
-
-
     public function __construct(
-        ClientName $name,
-        ClientEmail $email,
+        private ClientName $name,
+        private ClientEmail $email,
+        private ClientCpf $cpf
     )
     {
-        $this->name = $name;
-        $this->email = $email;
     }
 
     public function name(): ClientName
@@ -34,12 +30,18 @@ final class Client
         return $this->email;
     }
 
+    public function cpf(): ClientCpf
+    {
+        return $this->cpf;
+    }
+
     #[Pure]
     public static function create(
         ClientName $name,
         ClientEmail $email,
+        ClientCpf $cpf
     ): Client
     {
-        return new self($name, $email);
+        return new self($name, $email, $cpf);
     }
 }

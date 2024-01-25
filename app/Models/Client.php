@@ -20,5 +20,6 @@ class Client extends Authenticate
     protected $fillable = [
         'name',
         'email',
+        'cpf'
     ];
 }

@@ -6,7 +6,7 @@ namespace Src\BoundedContext\Client\Domain\ValueObjects;
 
 final class ClientName
 {
-    private $value;
+    private string $value;
 
     public function __construct(string $name)
     {
