@@ -18,16 +18,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/test', function () {
-    $teste = "UP";
-    $a = $teste;
-    return $a;
-});
 
 /**
- * @uses CreateUserController
+ * @uses CreateClientController
  */
-Route::post('user', 'App\Http\Controllers\CreateUserController');
+Route::post('v1/clients', 'App\Http\Controllers\CreateClientController');
 //Route::get('user/{id}', 'GetUserController');
 //Route::put('user/{id}', 'UpdateUserController');
 //Route::delete('user/{id}', 'DeleteUserController');
