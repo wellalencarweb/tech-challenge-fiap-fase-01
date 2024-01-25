@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Src\BoundedContext\Client\Infrastructure\Repositories;
+namespace Src\BoundedContext\Client\Infrastructure\Eloquent;
 
-use App\Client as EloquentClientModel;
+use Src\BoundedContext\Client\Infrastructure\Eloquent\ClientModel as EloquentClientModel;
 use Src\BoundedContext\Client\Domain\Contracts\ClientRepositoryContract;
 use Src\BoundedContext\Client\Domain\Client;
 use Src\BoundedContext\Client\Domain\ValueObjects\ClientCpf;

@@ -7,7 +7,7 @@ namespace Src\BoundedContext\Client\Infrastructure;
 use Illuminate\Http\Request;
 use Src\BoundedContext\Client\Application\GetClientUseCase;
 use Src\BoundedContext\Client\Application\UpdateClientUseCase;
-use Src\BoundedContext\Client\Infrastructure\Repositories\EloquentClientRepository;
+use Src\BoundedContext\Client\Infrastructure\Eloquent\EloquentClientRepository;
 
 final class UpdateClientController
 {
