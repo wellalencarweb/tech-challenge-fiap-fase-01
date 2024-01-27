@@ -4,17 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ClientResource;
 use Illuminate\Http\Request;
+use Src\BoundedContext\Client\Infrastructure\UpdateClientController as UpdateClientControllerInfra;
 
 class UpdateClientController extends Controller
 {
-    /**
-     * @var \Src\BoundedContext\Client\Infrastructure\UpdateClientController
-     */
-    private $updateClientController;
+    private UpdateClientControllerInfra $updateClientControllerInfra;
 
-    public function __construct(\Src\BoundedContext\Client\Infrastructure\UpdateClientController $updateClientController)
+    public function __construct(UpdateClientControllerInfra $updateClientControllerInfra)
     {
-        $this->updateClientController = $updateClientController;
+        $this->updateClientControllerInfra = $updateClientControllerInfra;
     }
 
     /**
@@ -25,7 +23,7 @@ class UpdateClientController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $updatedClient = new ClientResource($this->updateClientController->__invoke($request));
+        $updatedClient = new ClientResource($this->updateClientControllerInfra->__invoke($request));
 
         return response($updatedClient, 200);
     }
