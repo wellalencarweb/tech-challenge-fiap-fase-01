@@ -10,7 +10,7 @@ use Src\BoundedContext\Client\Infrastructure\Eloquent\EloquentClientRepository;
 
 final class GetClientController
 {
-    private $repository;
+    private EloquentClientRepository $repository;
 
     public function __construct(EloquentClientRepository $repository)
     {
@@ -19,11 +19,9 @@ final class GetClientController
 
     public function __invoke(Request $request)
     {
-        $userId = (int)$request->id;
+        $clientId = (int)$request->id;
 
         $getClientUseCase = new GetClientUseCase($this->repository);
-        $user           = $getClientUseCase->__invoke($userId);
-
-        return $user;
+        return $getClientUseCase->__invoke($clientId);
     }
 }

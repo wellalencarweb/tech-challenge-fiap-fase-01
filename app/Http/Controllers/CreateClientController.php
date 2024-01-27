@@ -5,17 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ClientResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Src\BoundedContext\Client\Infrastructure\CreateClientController as CreateClientControllerInfra;
 
 class CreateClientController extends Controller
 {
     /**
      * @var \Src\BoundedContext\Client\Infrastructure\CreateClientController
      */
-    private $createClientController;
+    private CreateClientControllerInfra $createClientControllerInfra;
 
-    public function __construct(\Src\BoundedContext\Client\Infrastructure\CreateClientController $createClientController)
+    public function __construct(CreateClientControllerInfra $createClientControllerInfra)
     {
-        $this->createClientController = $createClientController;
+        $this->createClientControllerInfra = $createClientControllerInfra;
     }
 
     /**
@@ -26,7 +27,7 @@ class CreateClientController extends Controller
      */
     public function __invoke(Request $request): Response
     {
-        $newClient = new ClientResource($this->createClientController->__invoke($request));
+        $newClient = new ClientResource($this->createClientControllerInfra->__invoke($request));
 
         return response($newClient, 201);
     }

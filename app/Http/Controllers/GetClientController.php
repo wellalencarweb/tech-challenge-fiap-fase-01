@@ -4,17 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ClientResource;
 use Illuminate\Http\Request;
+use Src\BoundedContext\Client\Infrastructure\GetClientController as GetClientControllerInfra;
 
 class GetClientController extends Controller
 {
-    /**
-     * @var \Src\BoundedContext\Client\Infrastructure\GetClientController
-     */
-    private $getClientController;
 
-    public function __construct(\Src\BoundedContext\Client\Infrastructure\GetClientController $getClientController)
+    private GetClientControllerInfra $getClientControllerInfra;
+
+    public function __construct(GetClientControllerInfra $getClientControllerInfra)
     {
-        $this->getClientController = $getClientController;
+        $this->getClientControllerInfra = $getClientControllerInfra;
     }
 
     /**
@@ -25,7 +24,7 @@ class GetClientController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $user = new ClientResource($this->getClientController->__invoke($request));
+        $user = new ClientResource($this->getClientControllerInfra->__invoke($request));
 
         return response($user, 200);
     }

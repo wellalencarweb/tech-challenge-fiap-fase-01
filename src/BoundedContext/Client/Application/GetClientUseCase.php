@@ -10,19 +10,17 @@ use Src\BoundedContext\Client\Domain\ValueObjects\ClientId;
 
 final class GetClientUseCase
 {
-    private $repository;
+    private ClientRepositoryContract $repository;
 
     public function __construct(ClientRepositoryContract $repository)
     {
         $this->repository = $repository;
     }
 
-    public function __invoke(int $userId): ?Client
+    public function __invoke(int $clientId): ?Client
     {
-        $id = new ClientId($userId);
+        $id = new ClientId($clientId);
 
-        $user = $this->repository->find($id);
-
-        return $user;
+        return $this->repository->find($id);
     }
 }

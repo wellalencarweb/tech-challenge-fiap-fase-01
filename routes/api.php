@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,8 +24,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  * @uses CreateClientController
  */
 Route::post('v1/clients', 'App\Http\Controllers\CreateClientController');
-//Route::get('user/{id}', 'GetUserController');
-//Route::put('user/{id}', 'UpdateUserController');
+
+/**
+ * @uses GetClientController
+ */
+Route::get('v1/clients/{id}', 'App\Http\Controllers\GetClientController');
+
+/**
+ * @uses UpdateClientController
+ */
+Route::put('v1/clients/{id}', 'App\Http\Controllers\UpdateClientController');
+
 //Route::delete('user/{id}', 'DeleteUserController');
 
 //Route::get('client/{id}', 'GetClientController');
