@@ -10,7 +10,7 @@ use Src\BoundedContext\Client\Infrastructure\Eloquent\EloquentClientRepository;
 
 final class DeleteClientController
 {
-    private $repository;
+    private EloquentClientRepository $repository;
 
     public function __construct(EloquentClientRepository $repository)
     {
@@ -19,9 +19,9 @@ final class DeleteClientController
 
     public function __invoke(Request $request)
     {
-        $userId = (int)$request->id;
+        $clientId = (int)$request->id;
 
         $deleteClientUseCase = new DeleteClientUseCase($this->repository);
-        $deleteClientUseCase->__invoke($userId);
+        $deleteClientUseCase->__invoke($clientId);
     }
 }

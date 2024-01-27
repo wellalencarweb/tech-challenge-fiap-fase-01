@@ -3,17 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Src\BoundedContext\Client\Infrastructure\DeleteClientController as DeleteClientControllerInfra;
 
 class DeleteClientController extends Controller
 {
-    /**
-     * @var \Src\BoundedContext\Client\Infrastructure\DeleteClientController
-     */
-    private $deleteClientController;
+    private DeleteClientControllerInfra $deleteClientControllerInfra;
 
-    public function __construct(\Src\BoundedContext\Client\Infrastructure\DeleteClientController $deleteClientController)
+    public function __construct(DeleteClientControllerInfra $deleteClientControllerInfra)
     {
-        $this->deleteClientController = $deleteClientController;
+        $this->deleteClientControllerInfra = $deleteClientControllerInfra;
     }
 
     /**
@@ -24,7 +22,7 @@ class DeleteClientController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $this->deleteClientController->__invoke($request);
+        $this->deleteClientControllerInfra->__invoke($request);
 
         return response([], 204);
     }

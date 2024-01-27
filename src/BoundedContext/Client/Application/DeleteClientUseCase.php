@@ -9,16 +9,16 @@ use Src\BoundedContext\Client\Domain\ValueObjects\ClientId;
 
 final class DeleteClientUseCase
 {
-    private $repository;
+    private ClientRepositoryContract $repository;
 
     public function __construct(ClientRepositoryContract $repository)
     {
         $this->repository = $repository;
     }
 
-    public function __invoke(int $userId): void
+    public function __invoke(int $clientId): void
     {
-        $id = new ClientId($userId);
+        $id = new ClientId($clientId);
 
         $this->repository->delete($id);
     }

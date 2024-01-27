@@ -35,9 +35,8 @@ Route::get('v1/clients/{id}', 'App\Http\Controllers\GetClientController');
  */
 Route::put('v1/clients/{id}', 'App\Http\Controllers\UpdateClientController');
 
-//Route::delete('user/{id}', 'DeleteUserController');
+/**
+ * @uses DeleteClientController
+ */
+Route::delete('v1/clients/{id}', 'App\Http\Controllers\DeleteClientController');
 
-//Route::get('client/{id}', 'GetClientController');
-//Route::post('client', 'CreateClientController');
-//Route::put('client/{id}', 'UpdateClientController');
-//Route::delete('client/{id}', 'DeleteClientController');
