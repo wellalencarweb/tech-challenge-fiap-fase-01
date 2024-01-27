@@ -12,7 +12,7 @@ use Src\BoundedContext\Client\Domain\ValueObjects\ClientName;
 
 final class GetClientByCriteriaUseCase
 {
-    private $repository;
+    private ClientRepositoryContract $repository;
 
     public function __construct(ClientRepositoryContract $repository)
     {
@@ -20,9 +20,9 @@ final class GetClientByCriteriaUseCase
     }
 
     public function __invoke(
-        string $clientName,
-        string $clientEmail,
-        string $clientCpf
+        ?string $clientName,
+        ?string $clientEmail,
+        ?string $clientCpf
     ): ?Client
     {
         $name   = new ClientName($clientName);

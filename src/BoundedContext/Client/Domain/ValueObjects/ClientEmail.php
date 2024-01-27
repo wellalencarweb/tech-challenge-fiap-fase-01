@@ -8,16 +8,19 @@ use InvalidArgumentException;
 
 final class ClientEmail
 {
-    private string $value;
+    private ?string $value;
 
     /**
      * ClientEmail constructor.
-     * @param string $email
+     * @param null|string $email
      * @throws InvalidArgumentException
      */
-    public function __construct(string $email)
+    public function __construct(?string $email)
     {
-        $this->validate($email);
+        if ($email) {
+            $this->validate($email);
+        }
+
         $this->value = $email;
     }
 
@@ -34,7 +37,7 @@ final class ClientEmail
         }
     }
 
-    public function value(): string
+    public function value(): ?string
     {
         return $this->value;
     }

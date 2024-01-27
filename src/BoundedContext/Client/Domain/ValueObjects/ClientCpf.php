@@ -8,17 +8,20 @@ use InvalidArgumentException;
 
 final class ClientCpf
 {
-    private string $value;
+    private ?string $value;
 
     /**
      * ClientCpf constructor.
      * @param string $cpf
      * @throws InvalidArgumentException
      */
-    public function __construct(string $cpf)
+    public function __construct(?string $cpf)
     {
-        $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
-        $this->validate($cpf);
+        if ($cpf) {
+            $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
+            $this->validate($cpf);
+        }
+
         $this->value = $cpf;
     }
 
@@ -36,7 +39,7 @@ final class ClientCpf
         }
     }
 
-    public function value(): string
+    public function value(): ?string
     {
         return $this->value;
     }

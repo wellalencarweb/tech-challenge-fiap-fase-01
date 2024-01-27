@@ -11,7 +11,7 @@ use Src\BoundedContext\Client\Infrastructure\Eloquent\EloquentClientRepository;
 
 final class CreateClientController
 {
-    private $repository;
+    private EloquentClientRepository $repository;
 
     public function __construct(EloquentClientRepository $repository)
     {
@@ -20,9 +20,9 @@ final class CreateClientController
 
     public function __invoke(Request $request)
     {
-        $clientName   = $request->input('name');
-        $clientEmail  = $request->input('email');
-        $clientCpf    = $request->input('cpf');
+        $clientName   = $request->input('name') ?? null;
+        $clientEmail  = $request->input('email') ?? null;
+        $clientCpf    = $request->input('cpf') ?? null;
 
         $createClientUseCase = new CreateClientUseCase($this->repository);
         $createClientUseCase->__invoke(

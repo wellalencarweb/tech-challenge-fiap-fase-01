@@ -25,9 +25,9 @@ final class CreateClientUseCase
         ?string $clientCpf,
     ): void
     {
-        $name   = new ClientName($clientName);
-        $email  = new ClientEmail($clientEmail);
-        $cpf    = new ClientCpf($clientCpf);
+        $name = new ClientName($clientName);
+        $email = new ClientEmail($clientEmail);
+        $cpf = $clientCpf ? new ClientCpf($clientCpf) : $clientCpf;
 
         $client = Client::create($name, $email, $cpf);
 

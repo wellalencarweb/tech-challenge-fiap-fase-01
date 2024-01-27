@@ -6,14 +6,14 @@ namespace Src\BoundedContext\Client\Domain\ValueObjects;
 
 final class ClientName
 {
-    private string $value;
+    private ?string $value;
 
-    public function __construct(string $name)
+    public function __construct(?string $name)
     {
         $this->value = $name;
     }
 
-    public function value(): string
+    public function value(): ?string
     {
         return $this->value;
     }

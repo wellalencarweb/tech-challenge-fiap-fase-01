@@ -34,12 +34,12 @@ final class EloquentClientRepository implements ClientRepositoryContract
         );
     }
 
-    public function findByCriteria(ClientName $name, ClientEmail $email, ClientCpf $cpf): ?Client
+    public function findByCriteria(?ClientName $clientName, ?ClientEmail $clientEmail, ?ClientCpf $clientCpf): ?Client
     {
         $client = $this->eloquentClientModel
-            ->where('name', $name->value())
-            ->where('email', $email->value())
-            ->where('cpf', $cpf->value())
+            ->where('name', $clientName->value())
+            ->where('email', $clientEmail->value())
+            ->where('cpf', $clientCpf->value())
             ->firstOrFail();
 
         // Return Domain Client model
