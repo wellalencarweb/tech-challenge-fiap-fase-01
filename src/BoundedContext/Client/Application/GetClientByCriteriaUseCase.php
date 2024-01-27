@@ -23,7 +23,7 @@ final class GetClientByCriteriaUseCase
         ?string $clientName,
         ?string $clientEmail,
         ?string $clientCpf
-    ): ?Client
+    ): array
     {
         $name   = new ClientName($clientName);
         $email  = new ClientEmail($clientEmail);

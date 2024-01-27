@@ -14,11 +14,11 @@ interface ClientRepositoryContract
 {
     public function find(ClientId $id): ?Client;
 
-    public function findByCriteria(ClientName $clientName, ClientEmail $clientEmail, ClientCpf $clientCpf): ?Client;
+    public function findByCriteria(ClientName $clientName, ClientEmail $clientEmail, ClientCpf $clientCpf): array;
 
-    public function save(Client $client): void;
+    public function save(Client $client): Client;
 
-    public function update(ClientId $clientId, Client $client): void;
+    public function update(Client $client): void;
 
     public function delete(ClientId $id): void;
 }

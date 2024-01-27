@@ -10,7 +10,7 @@ use Src\BoundedContext\Client\Infrastructure\Eloquent\EloquentClientRepository;
 
 final class GetClientByCriteriaController
 {
-    private $repository;
+    private EloquentClientRepository $repository;
 
     public function __construct(EloquentClientRepository $repository)
     {
@@ -19,12 +19,11 @@ final class GetClientByCriteriaController
 
     public function __invoke(Request $request)
     {
-        $userName  = $request->input('name');
-        $userEmail = $request->input('email');
+        $clientName  = $request->input('name') ?? null;
+        $clientEmail = $request->input('email') ?? null;
+        $clientCpf   = $request->input('cpf') ?? null;
 
         $getClientByCriteriaUseCase = new GetClientByCriteriaUseCase($this->repository);
-        $user                     = $getClientByCriteriaUseCase->__invoke($userName, $userEmail);
-
-        return $user;
+        return $getClientByCriteriaUseCase->__invoke($clientName, $clientEmail, $clientCpf);
     }
 }

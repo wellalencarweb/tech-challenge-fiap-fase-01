@@ -6,7 +6,6 @@ namespace Src\BoundedContext\Client\Infrastructure;
 
 use Illuminate\Http\Request;
 use Src\BoundedContext\Client\Application\CreateClientUseCase;
-use Src\BoundedContext\Client\Application\GetClientByCriteriaUseCase;
 use Src\BoundedContext\Client\Infrastructure\Eloquent\EloquentClientRepository;
 
 final class CreateClientController
@@ -25,13 +24,11 @@ final class CreateClientController
         $clientCpf    = $request->input('cpf') ?? null;
 
         $createClientUseCase = new CreateClientUseCase($this->repository);
-        $createClientUseCase->__invoke(
+
+        return $createClientUseCase->__invoke(
             $clientName,
             $clientEmail,
             $clientCpf
         );
-
-        $getClientByCriteriaUseCase = new GetClientByCriteriaUseCase($this->repository);
-        return $getClientByCriteriaUseCase->__invoke($clientName, $clientEmail, $clientCpf);
     }
 }

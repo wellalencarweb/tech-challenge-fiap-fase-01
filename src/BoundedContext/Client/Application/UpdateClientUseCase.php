@@ -32,8 +32,8 @@ final class UpdateClientUseCase
         $email             = new ClientEmail($clientEmail);
         $cpf               = new ClientCpf($clientCpf);
 
-        $client = Client::create($name, $email, $cpf);
+        $client = Client::create($id,$name, $email, $cpf);
 
-        $this->repository->update($id, $client);
+        $this->repository->update($client);
     }
 }

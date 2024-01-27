@@ -8,16 +8,19 @@ use InvalidArgumentException;
 
 final class ClientId
 {
-    private $value;
+    private ?int $value;
 
     /**
      * ClientId constructor.
      * @param int $id
      * @throws InvalidArgumentException
      */
-    public function __construct(int $id)
+    public function __construct(?int $id)
     {
-        $this->validate($id);
+        if ($id) {
+            $this->validate($id);
+        }
+
         $this->value = $id;
     }
 
@@ -40,7 +43,7 @@ final class ClientId
         }
     }
 
-    public function value(): int
+    public function value(): ?int
     {
         return $this->value;
     }

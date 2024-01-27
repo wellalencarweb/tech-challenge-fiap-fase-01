@@ -25,32 +25,27 @@ final class EloquentClientRepository implements ClientRepositoryContract
     public function find(ClientId $id): ?Client
     {
         $client = $this->eloquentClientModel->findOrFail($id->value());
-
-        // Return Domain Client model
-        return new Client(
-            new ClientName($client->name),
-            new ClientEmail($client->email),
-            new ClientCpf($client->cpf)
-        );
+        return $this->createDomainClientModel($client);
     }
 
-    public function findByCriteria(?ClientName $clientName, ?ClientEmail $clientEmail, ?ClientCpf $clientCpf): ?Client
+    public function findByCriteria(?ClientName $clientName, ?ClientEmail $clientEmail, ?ClientCpf $clientCpf): array
     {
-        $client = $this->eloquentClientModel
-            ->where('name', $clientName->value())
-            ->where('email', $clientEmail->value())
-            ->where('cpf', $clientCpf->value())
-            ->firstOrFail();
+        $clients = [];
 
-        // Return Domain Client model
-        return new Client(
-            new ClientName($client->name),
-            new ClientEmail($client->email),
-            new ClientCpf($client->cpf)
-        );
+        $clientsList = $this->eloquentClientModel
+            ->orWhere('name', 'like', '%' . $clientName->value() . '%')
+            ->orWhere('name', 'like', '%' . $clientEmail->value() . '%')
+            ->orWhere('cpf', $clientCpf->value())
+            ->get();
+
+        foreach ($clientsList as $client){
+            $clients[] = $this->createDomainClientModel($client);
+        }
+
+        return $clients;
     }
 
-    public function save(Client $client): void
+    public function save(Client $client): Client
     {
         $newClient = $this->eloquentClientModel;
 
@@ -60,10 +55,12 @@ final class EloquentClientRepository implements ClientRepositoryContract
             'cpf' => $client->cpf()->value(),
         ];
 
-        $newClient->create($data);
+        $client = $newClient->create($data);
+
+        return $this->createDomainClientModel($client);
     }
 
-    public function update(ClientId $id, Client $client): void
+    public function update(Client $client): void
     {
         $clientToUpdate = $this->eloquentClientModel;
 
@@ -74,7 +71,7 @@ final class EloquentClientRepository implements ClientRepositoryContract
         ];
 
         $clientToUpdate
-            ->findOrFail($id->value())
+            ->findOrFail($client->id()->value())
             ->update($data);
     }
 
@@ -83,5 +80,15 @@ final class EloquentClientRepository implements ClientRepositoryContract
         $this->eloquentClientModel
             ->findOrFail($id->value())
             ->delete();
+    }
+
+    private function createDomainClientModel(ClientModel $client): Client
+    {
+        return new Client(
+            new ClientId($client->id),
+            new ClientName($client->name),
+            new ClientEmail($client->email),
+            new ClientCpf($client->cpf)
+        );
     }
 }

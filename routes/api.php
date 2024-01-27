@@ -31,6 +31,11 @@ Route::post('v1/clients', 'App\Http\Controllers\CreateClientController');
 Route::get('v1/clients/{id}', 'App\Http\Controllers\GetClientController');
 
 /**
+ * @uses GetClientByCriteriaController
+ */
+Route::get('v1/clients', 'App\Http\Controllers\GetClientByCriteriaController');
+
+/**
  * @uses UpdateClientController
  */
 Route::put('v1/clients/{id}', 'App\Http\Controllers\UpdateClientController');

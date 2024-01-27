@@ -38,8 +38,6 @@ final class UpdateClientController
             $clientCpf
         );
 
-        $updatedClient = $getClientUseCase->__invoke($clientId);
-
-        return $updatedClient;
+        return $getClientUseCase->__invoke($clientId);
     }
 }

@@ -24,8 +24,8 @@ class GetClientController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $user = new ClientResource($this->getClientControllerInfra->__invoke($request));
+        $client = new ClientResource($this->getClientControllerInfra->__invoke($request));
 
-        return response($user, 200);
+        return response($client, 200);
     }
 }

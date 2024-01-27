@@ -8,6 +8,7 @@ use Src\BoundedContext\Client\Domain\Contracts\ClientRepositoryContract;
 use Src\BoundedContext\Client\Domain\Client;
 use Src\BoundedContext\Client\Domain\ValueObjects\ClientCpf;
 use Src\BoundedContext\Client\Domain\ValueObjects\ClientEmail;
+use Src\BoundedContext\Client\Domain\ValueObjects\ClientId;
 use Src\BoundedContext\Client\Domain\ValueObjects\ClientName;
 
 final class CreateClientUseCase
@@ -23,14 +24,15 @@ final class CreateClientUseCase
         ?string $clientName,
         ?string $clientEmail,
         ?string $clientCpf,
-    ): void
+    ): Client
     {
-        $name = new ClientName($clientName);
-        $email = new ClientEmail($clientEmail);
-        $cpf = $clientCpf ? new ClientCpf($clientCpf) : $clientCpf;
+        $id     = new ClientId(null);
+        $name   = new ClientName($clientName);
+        $email  = new ClientEmail($clientEmail);
+        $cpf    = new ClientCpf($clientCpf);
 
-        $client = Client::create($name, $email, $cpf);
+        $client = Client::create($id, $name, $email, $cpf);
 
-        $this->repository->save($client);
+        return $this->repository->save($client);
     }
 }
