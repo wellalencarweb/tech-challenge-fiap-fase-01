@@ -25,17 +25,22 @@ final class UpdateProductController
         $getProductUseCase = new GetProductUseCase($this->repository);
         $product           = $getProductUseCase->__invoke($productId);
 
-        $productName              = $request->input('name') ?? $product->name()->value();
-        $productEmail             = $request->input('email') ?? $product->email()->value();
-        $productCpf               = $request->input('cpf') ?? $product->cpf()->value();
+
+        $productName            = $request->input('name') ?? $product->name()->value();
+        $productDescription     = $request->input('description') ?? $product->description()->value();
+        $productPrice           = (float) $request->input('price') ?? $product->price()->value();
+        $productCategoryId      = (int) $request->input('category_id') ?? $product->categoryId()->value();
+        $productActive          = (bool) $request->input('active') ?? $product->active()->value();
 
 
         $updateProductUseCase = new UpdateProductUseCase($this->repository);
         $updateProductUseCase->__invoke(
             $productId,
             $productName,
-            $productEmail,
-            $productCpf
+            $productDescription,
+            $productPrice,
+            $productCategoryId,
+            $productActive
         );
 
         return $getProductUseCase->__invoke($productId);

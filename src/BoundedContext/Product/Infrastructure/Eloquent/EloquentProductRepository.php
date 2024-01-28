@@ -26,7 +26,8 @@ final class EloquentProductRepository implements ProductRepositoryContract
 
     public function find(ProductId $id): ?Product
     {
-        $product = $this->eloquentProductModel->findOrFail($id->value());
+        $product = $this->eloquentProductModel->find($id->value());
+
         return $this->createDomainProductModel($product);
     }
 
@@ -99,15 +100,19 @@ final class EloquentProductRepository implements ProductRepositoryContract
             ->delete();
     }
 
-    private function createDomainProductModel(ProductModel $product): Product
+    private function createDomainProductModel(?ProductModel $product): ?Product
     {
+        if (!$product) {
+            return null;
+        }
+
         return new Product(
             new ProductId($product->id),
             new ProductName($product->name),
             new ProductDescription($product->description),
             new ProductPrice($product->price),
             new ProductCategoryId($product->category_id),
-            new ProductActive($product->active),
+            new ProductActive((bool) $product->active),
         );
     }
 }
