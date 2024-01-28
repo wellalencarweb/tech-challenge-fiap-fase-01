@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('v1')->namespace('App\Http\Controllers')->group(function () {
+Route::prefix('v1')->namespace('App\Http\Controllers\Client')->group(function () {
     Route::prefix('clients')->group(function () {
         /**
          * @uses CreateClientController
@@ -44,7 +44,7 @@ Route::prefix('v1')->namespace('App\Http\Controllers')->group(function () {
         /**
          * @uses DeleteClientController
          */
-        Route::delete('v{id}', 'DeleteClientController');
+        Route::delete('{id}', 'DeleteClientController');
     });
 });
 

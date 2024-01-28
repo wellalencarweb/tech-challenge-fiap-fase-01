@@ -12,6 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        ClientModel::newFactoryTimes(2)->create();
+        ClientModel::newFactoryTimes(1)->create(['cpf' => '95162320005']);
     }
 }

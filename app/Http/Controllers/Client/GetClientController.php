@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientResource;
 use Illuminate\Http\Request;
 use Src\BoundedContext\Client\Infrastructure\GetClientController as GetClientControllerInfra;
