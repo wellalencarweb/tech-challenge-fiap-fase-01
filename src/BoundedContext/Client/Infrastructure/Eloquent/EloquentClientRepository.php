@@ -24,7 +24,8 @@ final class EloquentClientRepository implements ClientRepositoryContract
 
     public function find(ClientId $id): ?Client
     {
-        $client = $this->eloquentClientModel->findOrFail($id->value());
+        $client = $this->eloquentClientModel->find($id->value());
+
         return $this->createDomainClientModel($client);
     }
 
@@ -93,8 +94,12 @@ final class EloquentClientRepository implements ClientRepositoryContract
             ->delete();
     }
 
-    private function createDomainClientModel(ClientModel $client): Client
+    private function createDomainClientModel(?ClientModel $client): ?Client
     {
+        if (!$client) {
+            return null;
+        }
+
         return new Client(
             new ClientId($client->id),
             new ClientName($client->name),

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientResource;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Src\BoundedContext\Client\Infrastructure\GetClientByCriteriaController as GetClientByCriteriaControllerInfra;
 
 class GetClientByCriteriaController extends Controller
@@ -25,8 +26,13 @@ class GetClientByCriteriaController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $clients = new ClientResource($this->getClientByCriteriaController->__invoke($request));
+        $clientsData = $this->getClientByCriteriaController->__invoke($request);
 
-        return response($clients, 200);
+        if (!$clientsData) {
+            return response(['status' => 'error', 'message' => 'client not found'],  Response::HTTP_NOT_FOUND);
+        }
+
+        $clients = new ClientResource($clientsData);
+        return response($clients, Response::HTTP_OK);
     }
 }

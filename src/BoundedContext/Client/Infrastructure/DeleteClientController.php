@@ -6,6 +6,7 @@ namespace Src\BoundedContext\Client\Infrastructure;
 
 use Illuminate\Http\Request;
 use Src\BoundedContext\Client\Application\DeleteClientUseCase;
+use Src\BoundedContext\Client\Application\GetClientUseCase;
 use Src\BoundedContext\Client\Infrastructure\Eloquent\EloquentClientRepository;
 
 final class DeleteClientController
@@ -21,7 +22,16 @@ final class DeleteClientController
     {
         $clientId = (int)$request->id;
 
+        $getClientUseCase = new GetClientUseCase($this->repository);
+        $client           = $getClientUseCase->__invoke($clientId);
+
+        if (!$client) {
+            return null;
+        }
+
         $deleteClientUseCase = new DeleteClientUseCase($this->repository);
         $deleteClientUseCase->__invoke($clientId);
+
+        return true;
     }
 }

@@ -25,6 +25,10 @@ final class UpdateClientController
         $getClientUseCase = new GetClientUseCase($this->repository);
         $client           = $getClientUseCase->__invoke($clientId);
 
+        if (!$client) {
+            return null;
+        }
+
         $clientName              = $request->input('name') ?? $client->name()->value();
         $clientEmail             = $request->input('email') ?? $client->email()->value();
         $clientCpf               = $request->input('cpf') ?? $client->cpf()->value();

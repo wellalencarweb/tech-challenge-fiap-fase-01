@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ClientResource;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Src\BoundedContext\Client\Infrastructure\UpdateClientController as UpdateClientControllerInfra;
 
 class UpdateClientController extends Controller
@@ -24,8 +25,13 @@ class UpdateClientController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $updatedClient = new ClientResource($this->updateClientControllerInfra->__invoke($request));
+        $clientData = $this->updateClientControllerInfra->__invoke($request);
 
-        return response($updatedClient, 200);
+        if (!$clientData) {
+            return response(['status' => 'error', 'message' => 'client not found'],  Response::HTTP_NOT_FOUND);
+        }
+
+        $updatedClient = new ClientResource($clientData);
+        return response($updatedClient, Response::HTTP_OK);
     }
 }
