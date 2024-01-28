@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Src\BoundedContext\Product\Domain\ValueObjects;
 
-final class ProductPassword
+final class ProductName
 {
-    private $value;
+    private string $value;
 
-    public function __construct(string $password)
+    public function __construct(string $name)
     {
-        $this->value = $password;
+        $this->value = $name;
     }
 
     public function value(): string

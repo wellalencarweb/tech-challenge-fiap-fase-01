@@ -10,12 +10,11 @@ class CreateProductValidation
      */
     public static function validate(array $data): void
     {
-        $issetCpf = isset($data['cpf']);
-
         $validator = validator($data, [
-            'name' => $issetCpf ? 'sometimes|min:3' : 'required|min:3',
-            'email' => $issetCpf ? 'sometimes|email' : 'required|email',
-            'cpf' => isset($data['name']) && isset($data['email']) ? 'min:11' : 'required|min:11',
+            'name' => 'required|min:3|max:255',
+            'description' => 'required|min:3|max:500',
+            'price' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
+            'category_id' => 'required|integer',
         ]);
 
         if ($validator->fails()) {

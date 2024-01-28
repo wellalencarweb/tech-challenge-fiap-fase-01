@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Src\BoundedContext\Product\Infrastructure\Eloquent;
 
+use Src\BoundedContext\Product\Domain\ValueObjects\ProductActive;
+use Src\BoundedContext\Product\Domain\ValueObjects\ProductCategoryId;
+use Src\BoundedContext\Product\Domain\ValueObjects\ProductDescription;
+use Src\BoundedContext\Product\Domain\ValueObjects\ProductPrice;
 use Src\BoundedContext\Product\Infrastructure\Eloquent\ProductModel as EloquentProductModel;
 use Src\BoundedContext\Product\Domain\Contracts\ProductRepositoryContract;
 use Src\BoundedContext\Product\Domain\Product;
-use Src\BoundedContext\Product\Domain\ValueObjects\ProductCpf;
-use Src\BoundedContext\Product\Domain\ValueObjects\ProductEmail;
 use Src\BoundedContext\Product\Domain\ValueObjects\ProductId;
 use Src\BoundedContext\Product\Domain\ValueObjects\ProductName;
 
@@ -62,8 +64,10 @@ final class EloquentProductRepository implements ProductRepositoryContract
 
         $data = [
             'name' => $product->name()->value(),
-            'email' => $product->email()->value(),
-            'cpf' => $product->cpf()->value(),
+            'description' => $product->description()->value(),
+            'price' => $product->price()->value(),
+            'category_id' => $product->categoryId()->value(),
+            'active' => $product->active()->value()
         ];
 
         $product = $newProduct->create($data);
@@ -76,9 +80,11 @@ final class EloquentProductRepository implements ProductRepositoryContract
         $productToUpdate = $this->eloquentProductModel;
 
         $data = [
-            'name'  => $product->name()->value(),
-            'email' => $product->email()->value(),
-            'cpf'   => $product->cpf()->value(),
+            'name' => $product->name()->value(),
+            'description' => $product->description()->value(),
+            'price' => $product->price()->value(),
+            'category_id' => $product->categoryId()->value(),
+            'active' => $product->active()->value()
         ];
 
         $productToUpdate
@@ -98,8 +104,10 @@ final class EloquentProductRepository implements ProductRepositoryContract
         return new Product(
             new ProductId($product->id),
             new ProductName($product->name),
-            new ProductEmail($product->email),
-            new ProductCpf($product->cpf)
+            new ProductDescription($product->description),
+            new ProductPrice($product->price),
+            new ProductCategoryId($product->category_id),
+            new ProductActive($product->active),
         );
     }
 }

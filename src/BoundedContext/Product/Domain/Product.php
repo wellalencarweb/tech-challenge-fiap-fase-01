@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Src\BoundedContext\Product\Domain;
 
 use JetBrains\PhpStorm\Pure;
-use Src\BoundedContext\Product\Domain\ValueObjects\ProductCpf;
-use Src\BoundedContext\Product\Domain\ValueObjects\ProductEmail;
+use Src\BoundedContext\Product\Domain\ValueObjects\ProductActive;
+use Src\BoundedContext\Product\Domain\ValueObjects\ProductCategoryId;
+use Src\BoundedContext\Product\Domain\ValueObjects\ProductDescription;
 use Src\BoundedContext\Product\Domain\ValueObjects\ProductId;
 use Src\BoundedContext\Product\Domain\ValueObjects\ProductName;
+use Src\BoundedContext\Product\Domain\ValueObjects\ProductPrice;
 
 
 final class Product
@@ -16,9 +18,10 @@ final class Product
     public function __construct(
         private ProductId $id,
         private ProductName $name,
-        private ProductEmail $email,
-        private ProductCpf $cpf,
-
+        private ProductDescription $description,
+        private ProductPrice $price,
+        private ProductCategoryId $categoryId,
+        private ProductActive $active
     )
     {
     }
@@ -33,24 +36,36 @@ final class Product
         return $this->name;
     }
 
-    public function email(): ProductEmail
+    public function description(): ProductDescription
     {
-        return $this->email;
+        return $this->description;
     }
 
-    public function cpf(): ProductCpf
+    public function price(): ProductPrice
     {
-        return $this->cpf;
+        return $this->price;
+    }
+
+    public function categoryId(): ProductCategoryId
+    {
+        return $this->categoryId;
+    }
+
+    public function active(): ProductActive
+    {
+        return $this->active;
     }
 
     #[Pure]
     public static function create(
         ProductId $id,
         ProductName $name,
-        ProductEmail $email,
-        ProductCpf $cpf
+        ProductDescription $description,
+        ProductPrice $price,
+        ProductCategoryId $categoryId,
+        ProductActive $active
     ): Product
     {
-        return new self($id, $name, $email, $cpf);
+        return new self($id, $name, $description, $price, $categoryId, $active);
     }
 }

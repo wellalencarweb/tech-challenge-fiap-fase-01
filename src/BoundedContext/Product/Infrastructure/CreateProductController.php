@@ -19,16 +19,18 @@ final class CreateProductController
 
     public function __invoke(Request $request)
     {
-        $productName   = $request->input('name') ?? null;
-        $productEmail  = $request->input('email') ?? null;
-        $productCpf    = $request->input('cpf') ?? null;
+        $productName            = $request->input('name');
+        $productDescription     = $request->input('description');
+        $productPrice           = (float) $request->input('price');
+        $productCategoryId      = (int) $request->input('category_id');
 
         $createProductUseCase = new CreateProductUseCase($this->repository);
 
         return $createProductUseCase->__invoke(
             $productName,
-            $productEmail,
-            $productCpf
+            $productDescription,
+            $productPrice,
+            $productCategoryId
         );
     }
 }

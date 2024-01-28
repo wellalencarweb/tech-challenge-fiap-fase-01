@@ -4,9 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Request;
-use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\Pure;
-use Src\BoundedContext\Client\Domain\Client;
+use Src\BoundedContext\Product\Domain\Enums\ProductCategoryEnum;
+use Src\BoundedContext\Product\Domain\Product;
 
 class ProductResource extends JsonResource
 {
@@ -18,32 +17,31 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request)
     {
-
         $data = ['data' => []];
 
         $resource = $this->resource;
 
-        if ($resource instanceof Client) {
-            $data['data'][] = $this->mapDomainClient($resource);
+        if ($resource instanceof Product) {
+            $data['data'][] = $this->mapDomainProduct($resource);
         }
 
-        foreach ($resource as $client) {
-            $data['data'][] = $this->mapDomainClient($client);
+        foreach ($resource as $product) {
+            $data['data'][] = $this->mapDomainProduct($product);
         }
 
         return $data;
     }
 
 
-    #[Pure]
-    #[ArrayShape(['name' => "null|string", 'email' => "null|string", 'cpf' => "null|string"])]
-    public function mapDomainClient(Client $client): array
+    public function mapDomainProduct(Product $product): array
     {
         return [
-            'id' => $client->id()->value(),
-            'name' => $client->name()->value(),
-            'email' => $client->email()->value(),
-            'cpf' => $client->cpf()->value()
+            'id' => $product->id()->value(),
+            'name' => $product->name()->value(),
+            'description' => $product->description()->value(),
+            'price' => $product->price()->value(),
+            'category' => ProductCategoryEnum::from($product->categoryId()->value())->label,
+            'active' => $product->active()->value()
         ];
     }
 }

@@ -14,7 +14,7 @@ interface ProductRepositoryContract
 {
     public function find(ProductId $id): ?Product;
 
-    public function findByCriteria(ProductName $productName, ProductEmail $productEmail, ProductCpf $productCpf): array;
+    //public function findByCriteria(ProductName $productName, ProductEmail $productEmail, ProductCpf $productCpf): array;
 
     public function save(Product $product): Product;
 
