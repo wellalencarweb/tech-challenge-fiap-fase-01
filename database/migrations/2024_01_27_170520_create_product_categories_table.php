@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clients', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->nullable();
-            $table->string('email')->nullable()->unique();
-            $table->string('cpf')->nullable()->unique();
+        Schema::create('product_categories', function (Blueprint $table) {
+            $table->tinyInteger('id')->unsigned()->autoIncrement();
+            $table->string('description', 100);
             $table->timestamps();
 
-            $table->index(['id','name','email','cpf']);
+            $table->index('id');
         });
 
-        Schema::table('clients', function (Blueprint $table) {
+        Schema::table('product_categories', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
         });
@@ -32,7 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('product_categories');
     }
 };
-
