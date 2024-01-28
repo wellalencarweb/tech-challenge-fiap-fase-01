@@ -28,15 +28,26 @@ final class EloquentClientRepository implements ClientRepositoryContract
         return $this->createDomainClientModel($client);
     }
 
+
     public function findByCriteria(?ClientName $clientName, ?ClientEmail $clientEmail, ?ClientCpf $clientCpf): array
     {
         $clients = [];
 
-        $clientsList = $this->eloquentClientModel
-            ->orWhere('name', 'like', '%' . $clientName->value() . '%')
-            ->orWhere('name', 'like', '%' . $clientEmail->value() . '%')
-            ->orWhere('cpf', $clientCpf->value())
-            ->get();
+        $search = $this->eloquentClientModel->newQuery();
+
+        if (!is_null($clientName->value())) {
+            $search->where('name', $clientName->value());
+        }
+
+        if (!is_null($clientEmail->value())) {
+            $search->where('email', $clientEmail->value());
+        }
+
+        if (!is_null($clientCpf->value())) {
+            $search->where('cpf', $clientCpf->value());
+        }
+
+        $clientsList = $search->get();
 
         foreach ($clientsList as $client){
             $clients[] = $this->createDomainClientModel($client);
