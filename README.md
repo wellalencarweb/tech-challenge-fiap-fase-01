@@ -50,25 +50,30 @@ Outra opção é fazer um Fork via:
 
 ### Client
 - Identificação do Cliente (pode ser somente com CPF; email e name, ou todos os campos)
-![client-create](docs/rotas/client-create.png)
-- Obter dados do Cliente 
-- Alterar o Cadastro
-![client-get-update](docs/rotas/client-get-update.png)
+
+  ![client-create](docs/rotas/client-create.png)
+
+- Obter dados do Cliente | Alterar o Cadastro
+
+  ![client-get-update](docs/rotas/client-get-update.png)
+
 - Deletar Cliente
-![client-delete](docs/rotas/client-delete.png)
+
+  ![client-delete](docs/rotas/client-delete.png)
 
 ### Produto
-- Cadastar Produtos
-- Listar Produtos por ID e Categoria
+- Cadastar Produtos | Listar Produtos por ID e Categoria
+
   ![product](docs/rotas/product.png)
-- Atualizar os Produto
-- Remover Produto
+
+- Atualizar os Produto | Remover Produto
+
   ![product-put-delete](docs/rotas/product-put-delete.png)
 
 ### Pedido
-- Criação do Pedido
-- Listar os Pedidos
-  ![order-healthcheck](docs/rotas/order-healthcheck.png)
+- Criação do Pedido | Listar os Pedidos
+  
+    ![order-healthcheck](docs/rotas/order-healthcheck.png)
 
 ## Desenvolvimento do projeto
 
@@ -77,14 +82,20 @@ Outra opção é fazer um Fork via:
 Foram utilizadas técnicas de Domain Driven Design para definição dos fluxos:
 
 - Identificação do Cliente e Início do Pedido
+
   ![identificação_pedido](docs/event-storming-ddd/identificação_pedido.png)
+
 - Pagamento
+
   ![identificação_pedido](docs/event-storming-ddd/pagamento.png)
+
 - Preparação e Entrega
+
   ![preparação_entrega](docs/event-storming-ddd/preparação_entrega.png)
 
 ### Dicionário da Linguagem Ubíqua
 - Dicionário
+
   ![dicionario-ubiqua](docs/event-storming-ddd/dicionario-ubiqua.png)
 
 ### Estrutura do Projeto
