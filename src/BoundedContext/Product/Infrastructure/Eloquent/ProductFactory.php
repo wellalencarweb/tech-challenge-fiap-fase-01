@@ -16,7 +16,7 @@ class ProductFactory extends Factory
         return [
             'name' => fake()->name(),
             'description' => fake()->text(),
-            'price' => fake()->randomFloat(2, 1, 5),
+            'price' => fake()->numberBetween(100, 500) / 100,
             'category_id' => ProductCategoryEnum::SNACK()->value,
             'active' => 1
         ];

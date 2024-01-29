@@ -19,11 +19,9 @@ final class GetProductByCriteriaController
 
     public function __invoke(Request $request)
     {
-        $productName  = $request->input('name') ?? null;
-        $productEmail = $request->input('email') ?? null;
-        $productCpf   = $request->input('cpf') ?? null;
+        $productCategory = $request->input('category') ?? null;
 
         $getProductByCriteriaUseCase = new GetProductByCriteriaUseCase($this->repository);
-        return $getProductByCriteriaUseCase->__invoke($productName, $productEmail, $productCpf);
+        return $getProductByCriteriaUseCase->__invoke($productCategory);
     }
 }

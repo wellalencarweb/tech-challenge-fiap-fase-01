@@ -46,7 +46,9 @@ final class ProductPrice
             return false;
         }
 
-        if (floor($price * 100) != $price * 100) {
+        $roundedPrice = round($price, 2);
+
+        if ($roundedPrice != $price) {
             return false;
         }
 

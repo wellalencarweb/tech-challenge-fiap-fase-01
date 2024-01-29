@@ -32,22 +32,30 @@ final class EloquentProductRepository implements ProductRepositoryContract
     }
 
 
-    public function findByCriteria(?ProductName $productName, ?ProductEmail $productEmail, ?ProductCpf $productCpf): array
+    public function findByCriteria(?string $productCategory): array
     {
         $products = [];
 
         $search = $this->eloquentProductModel->newQuery();
 
-        if (!is_null($productName->value())) {
-            $search->where('name', $productName->value());
-        }
+        $selectFields = [
+            'products.id',
+            'products.name',
+            'products.description',
+            'products.price',
+            'products.category_id',
+            'products.active',
+        ];
 
-        if (!is_null($productEmail->value())) {
-            $search->where('email', $productEmail->value());
-        }
+        $search->select($selectFields);
 
-        if (!is_null($productCpf->value())) {
-            $search->where('cpf', $productCpf->value());
+        if (!is_null($productCategory)) {
+            $search
+                ->join(
+                    'product_categories',
+                    'products.category_id', '=', 'product_categories.id'
+                )
+                ->where('product_categories.description', 'LIKE', '%' . $productCategory . '%');
         }
 
         $productsList = $search->get();

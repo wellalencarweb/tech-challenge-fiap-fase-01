@@ -20,15 +20,9 @@ final class GetProductByCriteriaUseCase
     }
 
     public function __invoke(
-        ?string $productName,
-        ?string $productEmail,
-        ?string $productCpf
+        ?string $productCategory
     ): array
     {
-        $name   = new ProductName($productName);
-        $email  = new ProductEmail($productEmail);
-        $cpf    = new ProductCpf($productCpf);
-
-        return $this->repository->findByCriteria($name, $email, $cpf);
+        return $this->repository->findByCriteria($productCategory);
     }
 }
