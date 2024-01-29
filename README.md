@@ -10,6 +10,10 @@ Sistema de Gerenciamento de Pedidos - Lanchonete
 
 [Link da Documentação da API](https://documenter.getpostman.com/view/2196561/2s9YysBgBA)
 
+[Dockerfile](Dockerfile)
+
+[docker-compose](docker-compose.yml)
+
 ## Stack utilizada
 * PHP 8.2
 * MySQL
