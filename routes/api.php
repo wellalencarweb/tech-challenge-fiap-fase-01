@@ -73,6 +73,19 @@ Route::prefix('v1')->group(function () {
          */
         Route::delete('{id}', 'DeleteProductController');
     });
+
+    Route::prefix('orders')->namespace('App\Http\Controllers\Order')->group(function () {
+        /**
+         * @uses CreateOrderController
+         */
+        Route::post('', 'CreateOrderController');
+
+        /**
+         * @uses GetOrderByCriteriaController
+         */
+        Route::get('', 'GetOrderByCriteriaController');
+
+    });
 });
 
 
