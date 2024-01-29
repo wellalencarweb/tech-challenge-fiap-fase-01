@@ -99,6 +99,9 @@ Foram utilizadas técnicas de Domain Driven Design para definição dos fluxos:
   ![dicionario-ubiqua](docs/event-storming-ddd/dicionario-ubiqua.png)
 
 ### Estrutura do Projeto
+[Dockerfile](Dockerfile)
+
+[docker-compose](docker-compose.yml)
 
 O projeto foi reestruturado seguindo o padrão do Arquitetura Hexagonal e DDD.
 
