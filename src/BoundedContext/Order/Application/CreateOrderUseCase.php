@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Src\BoundedContext\Order\Application;
 
 use Src\BoundedContext\Order\Domain\Contracts\OrderRepositoryContract;
+use Src\BoundedContext\Order\Domain\Enums\OrderStatusEnum;
 use Src\BoundedContext\Order\Domain\Order;
+use Src\BoundedContext\Order\Domain\ValueObjects\OrderClientId;
 use Src\BoundedContext\Order\Domain\ValueObjects\OrderCpf;
 use Src\BoundedContext\Order\Domain\ValueObjects\OrderEmail;
 use Src\BoundedContext\Order\Domain\ValueObjects\OrderId;
@@ -21,17 +23,17 @@ final class CreateOrderUseCase
     }
 
     public function __invoke(
-        ?string $orderName,
-        ?string $orderEmail,
-        ?string $orderCpf,
+        int $orderClientId,
+        array $orderProducts
     ): Order
     {
-        $id     = new OrderId(null);
-        $name   = new OrderName($orderName);
-        $email  = new OrderEmail($orderEmail);
-        $cpf    = new OrderCpf($orderCpf);
+        $id         = new OrderId(null);
+        $clientId   = new OrderClientId($orderClientId);
+        //Todo: criar value object
+        $products   = $orderProducts;
+        $status     = OrderStatusEnum::RECEIVED()->value;
 
-        $order = Order::create($id, $name, $email, $cpf);
+        $order = Order::create($id, $clientId, $products, $status);
 
         return $this->repository->save($order);
     }

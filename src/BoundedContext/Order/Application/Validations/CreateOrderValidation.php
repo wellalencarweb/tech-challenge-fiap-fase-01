@@ -10,12 +10,10 @@ class CreateOrderValidation
      */
     public static function validate(array $data): void
     {
-        $issetCpf = isset($data['cpf']);
-
         $validator = validator($data, [
-            'name' => $issetCpf ? 'sometimes|min:3|max:255' : 'required|min:3|max:255',
-            'email' => $issetCpf ? 'sometimes|email|max:255' : 'required|email|max:255',
-            'cpf' => isset($data['name']) && isset($data['email']) ? 'min:11|max:14' : 'required|min:11|max:14',
+            'client_id' => 'required|integer',
+            'products' => 'required|array',
+            'products.*' => 'integer'
         ]);
 
         if ($validator->fails()) {

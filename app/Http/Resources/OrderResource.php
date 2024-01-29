@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Request;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
+use Src\BoundedContext\Order\Domain\Enums\OrderStatusEnum;
 use Src\BoundedContext\Order\Domain\Order;
 
 class OrderResource extends JsonResource
@@ -35,15 +36,18 @@ class OrderResource extends JsonResource
     }
 
 
-    #[Pure]
-    #[ArrayShape(['name' => "null|string", 'email' => "null|string", 'cpf' => "null|string"])]
     public function mapDomainOrder(Order $order): array
     {
+        $productsWithoutPrice = collect($order->products())->map(function ($product) {
+            unset($product['price']);
+            return $product;
+        });
+
         return [
             'id' => $order->id()->value(),
-            'name' => $order->name()->value(),
-            'email' => $order->email()->value(),
-            'cpf' => $order->cpf()->value()
+            'client_id' => $order->clientId()->value(),
+            'products' => $productsWithoutPrice,
+            'status' => OrderStatusEnum::from($order->status())->label,
         ];
     }
 }

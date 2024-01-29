@@ -6,7 +6,7 @@ namespace Src\BoundedContext\Order\Domain\ValueObjects;
 
 use InvalidArgumentException;
 
-final class OrderId
+final class OrderClientId
 {
     private ?int $value;
 
@@ -38,7 +38,7 @@ final class OrderId
 
         if (!filter_var($id, FILTER_VALIDATE_INT, $options)) {
             throw new InvalidArgumentException(
-                sprintf('<%s> does not allow the value <%s>.', OrderId::class, $id)
+                sprintf('<%s> does not allow the value <%s>.', OrderClientId::class, $id)
             );
         }
     }

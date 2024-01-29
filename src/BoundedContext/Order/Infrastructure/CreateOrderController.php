@@ -19,16 +19,15 @@ final class CreateOrderController
 
     public function __invoke(Request $request)
     {
-        $orderName   = $request->input('name') ?? null;
-        $orderEmail  = $request->input('email') ?? null;
-        $orderCpf    = $request->input('cpf') ?? null;
+        $orderClientId  = (int) $request->input('client_id');
+        $orderProducts  = $request->input('products');
+
 
         $createOrderUseCase = new CreateOrderUseCase($this->repository);
 
         return $createOrderUseCase->__invoke(
-            $orderName,
-            $orderEmail,
-            $orderCpf
+            $orderClientId,
+            $orderProducts
         );
     }
 }

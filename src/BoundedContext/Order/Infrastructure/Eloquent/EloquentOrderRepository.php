@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Src\BoundedContext\Order\Infrastructure\Eloquent;
 
+use Src\BoundedContext\Order\Domain\ValueObjects\OrderClientId;
 use Src\BoundedContext\Order\Infrastructure\Eloquent\OrderModel as EloquentOrderModel;
+use Src\BoundedContext\Order\Infrastructure\Eloquent\OrderItemsModel as EloquentOrderItemsModel;
 use Src\BoundedContext\Order\Domain\Contracts\OrderRepositoryContract;
 use Src\BoundedContext\Order\Domain\Order;
 use Src\BoundedContext\Order\Domain\ValueObjects\OrderCpf;
@@ -16,10 +18,12 @@ use Src\BoundedContext\Order\Domain\ValueObjects\OrderName;
 final class EloquentOrderRepository implements OrderRepositoryContract
 {
     private EloquentOrderModel $eloquentOrderModel;
+    private EloquentOrderItemsModel $eloquentOrderItemsModel;
 
     public function __construct()
     {
         $this->eloquentOrderModel = new EloquentOrderModel;
+        $this->eloquentOrderItemsModel = new EloquentOrderItemsModel;
     }
 
     public function find(OrderId $id): ?Order
@@ -62,14 +66,30 @@ final class EloquentOrderRepository implements OrderRepositoryContract
         $newOrder = $this->eloquentOrderModel;
 
         $data = [
-            'name' => $order->name()->value(),
-            'email' => $order->email()->value(),
-            'cpf' => $order->cpf()->value(),
+            'client_id' => $order->clientId()->value(),
+            'order_status_id' => $order->status(),
         ];
+
+        $dataProducts = $order->products();
 
         $order = $newOrder->create($data);
 
-        return $this->createDomainOrderModel($order);
+        $newOrderItems = $this->eloquentOrderItemsModel;
+
+        $orderItems = [];
+
+        foreach ($dataProducts as $productId) {
+            $data = [
+                'order_id' => $order->id,
+                'product_id' => $productId,
+                'quantity' => 1, //Todo: implementar escolha pelo Client
+                'price' => 1 //Todo: implementar busca do preço atual do produto
+            ];
+
+            $orderItems[] = $newOrderItems->create($data);
+        }
+
+        return $this->createDomainOrderModel($order, $orderItems);
     }
 
     public function update(Order $order): void
@@ -94,7 +114,7 @@ final class EloquentOrderRepository implements OrderRepositoryContract
             ->delete();
     }
 
-    private function createDomainOrderModel(?OrderModel $order): ?Order
+    private function createDomainOrderModel(?OrderModel $order, array $orderItems): ?Order
     {
         if (!$order) {
             return null;
@@ -102,9 +122,9 @@ final class EloquentOrderRepository implements OrderRepositoryContract
 
         return new Order(
             new OrderId($order->id),
-            new OrderName($order->name),
-            new OrderEmail($order->email),
-            new OrderCpf($order->cpf)
+            new OrderClientId($order->client_id),
+            $orderItems,
+            $order->order_status_id
         );
     }
 }
