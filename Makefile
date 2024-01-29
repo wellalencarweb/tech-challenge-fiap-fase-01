@@ -11,14 +11,23 @@ down:
 	@ docker-compose down
 
 bash:
-	@docker-compose exec app bash
+	@ docker-compose exec app bash
 
 test:
-	@docker-compose exec -T app php ./vendor/bin/phpunit --coverage-text
+	@ docker-compose exec -T app php ./vendor/bin/phpunit --coverage-text
 
 test-coverage:
-	@docker-compose exec -T app php ./vendor/bin/phpunit --coverage-html coverage
+	@ docker-compose exec -T app php ./vendor/bin/phpunit --coverage-html coverage
 
-infection:
-	@docker-compose exec -T app composer run-script infection
+composer-install:
+	@ docker-compose exec app composer install
+
+composer-update:
+	@ docker-compose exec app composer update
+
+migrate-fresh:
+	@ docker-compose exec app php artisan migrate:fresh
+
+migrate-fresh-seed:
+	@ docker-compose exec app php artisan migrate:fresh --seed
 
