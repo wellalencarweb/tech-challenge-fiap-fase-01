@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Src\BoundedContext\Order\Application;
 
 use Src\BoundedContext\Order\Domain\Contracts\OrderRepositoryContract;
-use Src\BoundedContext\Order\Domain\Order;
 use Src\BoundedContext\Order\Domain\ValueObjects\OrderCpf;
 use Src\BoundedContext\Order\Domain\ValueObjects\OrderEmail;
 use Src\BoundedContext\Order\Domain\ValueObjects\OrderName;
