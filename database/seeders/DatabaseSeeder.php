@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Src\BoundedContext\Client\Infrastructure\Eloquent\ClientModel;
+use Src\BoundedContext\Order\Domain\Enums\OrderStatusEnum;
 use Src\BoundedContext\Product\Domain\Enums\ProductCategoryEnum;
 use Src\BoundedContext\Product\Infrastructure\Eloquent\ProductModel;
 
@@ -23,6 +24,14 @@ class DatabaseSeeder extends Seeder
                 'description' => $key,
             ]);
         }
+
+        foreach(OrderStatusEnum::values() as $key => $id) {
+            DB::table('order_status')->updateOrInsert([
+                'id' => $id,
+                'description' => $key,
+            ]);
+        }
+
 
         ProductModel::newFactoryTimes(1)
             ->create([
