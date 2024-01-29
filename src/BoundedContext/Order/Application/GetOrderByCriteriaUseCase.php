@@ -19,15 +19,10 @@ final class GetOrderByCriteriaUseCase
     }
 
     public function __invoke(
-        ?string $orderName,
-        ?string $orderEmail,
-        ?string $orderCpf
+        ?string $orderStatus
     ): array
     {
-        $name   = new OrderName($orderName);
-        $email  = new OrderEmail($orderEmail);
-        $cpf    = new OrderCpf($orderCpf);
-
-        return $this->repository->findByCriteria($name, $email, $cpf);
+        //Todo: implementar ValueObject para $orderStatus
+        return $this->repository->findByCriteria($orderStatus);
     }
 }

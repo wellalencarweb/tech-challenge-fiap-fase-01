@@ -19,11 +19,9 @@ final class GetOrderByCriteriaController
 
     public function __invoke(Request $request)
     {
-        $orderName  = $request->input('name') ?? null;
-        $orderEmail = $request->input('email') ?? null;
-        $orderCpf   = $request->input('cpf') ?? null;
+        $orderStatus  = $request->input('status') ?? null;
 
         $getOrderByCriteriaUseCase = new GetOrderByCriteriaUseCase($this->repository);
-        return $getOrderByCriteriaUseCase->__invoke($orderName, $orderEmail, $orderCpf);
+        return $getOrderByCriteriaUseCase->__invoke($orderStatus);
     }
 }

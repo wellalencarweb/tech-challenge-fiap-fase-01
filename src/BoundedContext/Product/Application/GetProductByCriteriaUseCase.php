@@ -23,6 +23,7 @@ final class GetProductByCriteriaUseCase
         ?string $productCategory
     ): array
     {
+        //Todo: implementar ValueObject para $productCategory
         return $this->repository->findByCriteria($productCategory);
     }
 }

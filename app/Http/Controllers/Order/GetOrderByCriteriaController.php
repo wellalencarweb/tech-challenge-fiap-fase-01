@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderListResource;
 use App\Http\Resources\OrderResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -32,7 +33,7 @@ class GetOrderByCriteriaController extends Controller
             return response(['status' => 'error', 'message' => 'order not found'],  Response::HTTP_NOT_FOUND);
         }
 
-        $orders = new OrderResource($ordersData);
+        $orders = new OrderListResource($ordersData);
         return response($orders, Response::HTTP_OK);
     }
 }

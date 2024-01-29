@@ -14,7 +14,7 @@ interface OrderRepositoryContract
 {
     public function find(OrderId $id): ?Order;
 
-    public function findByCriteria(OrderName $orderName, OrderEmail $orderEmail, OrderCpf $orderCpf): array;
+    public function findByCriteria(?string $orderStatus): array;
 
     public function save(Order $order): Order;
 

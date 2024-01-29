@@ -34,31 +34,37 @@ final class EloquentOrderRepository implements OrderRepositoryContract
     }
 
 
-    public function findByCriteria(?OrderName $orderName, ?OrderEmail $orderEmail, ?OrderCpf $orderCpf): array
+    public function findByCriteria(?string $orderStatus): array
     {
-        $orders = [];
-
         $search = $this->eloquentOrderModel->newQuery();
 
-        if (!is_null($orderName->value())) {
-            $search->where('name', $orderName->value());
+        $search->select([
+            'orders.id',
+            'orders.order_status_id',
+            'order_status.description as order_status_description',
+            'order_items.id as id_ordem_item',
+            'orders.client_id',
+            'clients.name as client_name',
+            'clients.email as client_email',
+            'clients.cpf as client_cpf',
+            'products.name as product_name',
+            'products.description as product_description',
+            'products.price as product_price',
+            'order_items.quantity'
+        ]);
+
+        $search->join('order_items', 'orders.id', '=', 'order_items.order_id');
+        $search->join('order_status', 'orders.order_status_id', '=', 'order_status.id');
+        $search->join('clients', 'orders.client_id', '=', 'clients.id');
+        $search->join('products', 'order_items.product_id', '=', 'products.id');
+
+        if (!is_null($orderStatus)) {
+            $search->where('order_status.description', 'LIKE', '%' . $orderStatus . '%');
         }
 
-        if (!is_null($orderEmail->value())) {
-            $search->where('email', $orderEmail->value());
-        }
+        $search->orderBy('orders.id');
 
-        if (!is_null($orderCpf->value())) {
-            $search->where('cpf', $orderCpf->value());
-        }
-
-        $ordersList = $search->get();
-
-        foreach ($ordersList as $order){
-            $orders[] = $this->createDomainOrderModel($order);
-        }
-
-        return $orders;
+        return $search->get()->toArray();
     }
 
     public function save(Order $order): Order

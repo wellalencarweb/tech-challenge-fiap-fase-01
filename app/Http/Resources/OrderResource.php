@@ -4,8 +4,6 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Request;
-use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\Pure;
 use Src\BoundedContext\Order\Domain\Enums\OrderStatusEnum;
 use Src\BoundedContext\Order\Domain\Order;
 
